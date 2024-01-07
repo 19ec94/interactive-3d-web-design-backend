@@ -55,6 +55,7 @@ exports.loginUser = async (req, res)=> {
         //TODO: Dashboard
       } else {
         res.send("login complete");
+        console.log("User account verified");
       }
     }
   } catch(err) {
@@ -73,8 +74,10 @@ exports.deleteUserById = async (req, res) => {
       return res.status(404).json({message: 'Username does not exist'});
     }
     res.status(200).json({message: 'Deleted account successfully'});
+    console.log({message: 'Deleted account successfully'})
   } catch (err) {
     console.error('Error deleting user:', err.message);
     res.status(500).json({message: 'Internal Server Error'});
+    console.log({message: 'Deleted account successfully'})
   }
 };

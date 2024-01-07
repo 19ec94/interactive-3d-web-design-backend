@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const userRoutes = require('./app/routes/userRoutes');
 const connectToDataBase = require('./config/database.js');
+const cors = require('cors');
 
 //
 // Start application
@@ -10,6 +11,8 @@ const app = express();
 // Configure parsing using json
 app.use(express.json())
 app.use(express.urlencoded({extended: false}));
+//
+app.use(cors())
 //
 connectToDataBase();
 //
