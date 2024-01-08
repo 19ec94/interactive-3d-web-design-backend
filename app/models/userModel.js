@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-// Create a schema for a database entry
 const userDataSchema = new mongoose.Schema({
   userName: { 
     type: String,
@@ -21,12 +20,9 @@ const userDataSchema = new mongoose.Schema({
 
 userDataSchema.pre('save', async function(next) {
   try {
-    // Return an error if username is empty
     if (this.userName.trim().length === 0) {
       throw new Error('Username cannot be empty');
     }
-    // If password is not empty, hash the password,
-    // else return an error message
     if (this.userPassword.trim().length > 0) {
       const hashedPassword = await bcrypt.hash(this.userPassword, 10);
       this.userPassword = hashedPassword;
@@ -39,7 +35,6 @@ userDataSchema.pre('save', async function(next) {
   }
 });
 
-// Create a database named userDB 
 const userDB =  mongoose.model("userDB", userDataSchema);
 module.exports  = userDB;
 // NOTE: In mongodb database, you find a collection `userdbs` in admin database
