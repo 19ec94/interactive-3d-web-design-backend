@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const { isEmail } = require('validator');
 const bcrypt = require('bcrypt');
 
 // Create a schema for a database entry
@@ -13,10 +12,6 @@ const userDataSchema = new mongoose.Schema({
     required: [true, 'Provide a valid email address'],
     trim: true,
     lowercase: true,
-    validate: {
-      validator: (value) => isEmail(value),
-      message: 'Invalid Email address',
-    },
   },
   userPassword: {
     type: String,
