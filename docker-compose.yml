@@ -4,11 +4,11 @@ services:
     container_name: mongodb
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: admin 
-      MONGO_INITDB_ROOT_PASSWORD: admin() 
-      MONGO_INITDB_DATABASE: admin 
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER} 
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${DB_NAME}
     ports:
-      - "27017:27017"
+      - "${DB_PORT}:27017"
     volumes:
       - database:/data/db
 volumes:
