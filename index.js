@@ -4,6 +4,7 @@ const express = require('express');
 const userRoutes = require('./app/routes/userRoutes');
 const connectToDataBase = require('./config/database.js');
 const cors = require('cors');
+require('dotenv').config()
 
 //
 // Start application
@@ -17,7 +18,7 @@ app.use(cors())
 connectToDataBase();
 //
 // Start server
-const PORT = 5000
+const PORT = process.env.PORT || 5000; 
 app.listen(PORT, ()=> console.log(`Server running on ${PORT}`));
 //
 // Set view engine
