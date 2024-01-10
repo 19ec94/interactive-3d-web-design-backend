@@ -13,14 +13,8 @@ exports.createUser = async (req, res) => {
     const existingUser = await userDB.findOne({userName: user.userName});
     if (!existingUser){
       const newUser = await user.save();
-      const secretKey = process.env.SECRETKEY || 'default_key';
-      const token = jwt.sign(
-        {userId: newUser._id}, 
-        secretKey, 
-        {expiresIn:'1h'});
-      // Send response
-      res.status(201).json({token});
-      console.log(newUser);// debugging
+      console.log("Created account successfully");// debugging
+      await exports.loginUser(req, res);
     }
     else {
       // Send error status
@@ -33,7 +27,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.loginUser = async (req, res)=> {
+exports.loginUser = async (req, res, user)=> {
   try {
     // Get user login data
     const login = {
@@ -59,7 +53,7 @@ exports.loginUser = async (req, res)=> {
           {expiresIn:'1h'});
         // Send response
         res.status(201).json({token});
-        console.log("User account verified");
+        console.log("User logged in sucessfully");
       }
     }
   } catch(err) {
