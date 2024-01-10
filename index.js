@@ -4,7 +4,7 @@ const express = require('express');
 const userRoutes = require('./app/routes/userRoutes');
 const connectToDataBase = require('./config/database.js');
 const cors = require('cors');
-require('dotenv').config()
+require('dotenv').config();
 
 //
 // Start application
@@ -33,5 +33,4 @@ app.get('/', async (req, res)=> {
   });
 });
 
-app.use('/', userRoutes);
-
+app.use('/user', userRoutes);
