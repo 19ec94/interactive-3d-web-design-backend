@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt'); 
 const userDB = require('../models/userModel');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 exports.createUser = async (req, res) => {
 
@@ -81,13 +82,16 @@ exports.loginUser = async (req, res)=> {
           }
         );
       } else {
-        const secretKey = process.env.SECRETKEY || 'default_key';
+        const sessionTokenSecretKey = process.env.SESSION_TOKEN_SECRET_KEY;
+        const sessionTokenDuration = process.env.SESSION_TOKEN_DURATION;
 
-        const token = await jwt.sign(
+        const sessionToken = await jwt.sign(
           { userId: existingUser._id }, 
-          secretKey, 
-          { expiresIn:'1h' }
+          sessionTokenSecretKey, 
+          { expiresIn: sessionTokenDuration }
         );
+
+        res.cookie('sessionToken', sessionToken, { httpOnly: true });
 
         res.status(201).json(
           {
@@ -95,7 +99,7 @@ exports.loginUser = async (req, res)=> {
             "data": { 
               "userName": existingUser.userName,
               "userEmail": existingUser.userEmail,
-              "token": token
+              "token": sessionToken
             },
           }
         );
