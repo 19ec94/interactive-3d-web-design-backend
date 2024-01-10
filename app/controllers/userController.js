@@ -3,6 +3,7 @@ const userDB = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 
 exports.createUser = async (req, res) => {
+
   try {
     // Create a new database entry
     const user = new userDB ({
@@ -15,19 +16,33 @@ exports.createUser = async (req, res) => {
       const newUser = await user.save();
       console.log("Created account successfully");// debugging
       await exports.loginUser(req, res);
-    }
-    else {
-      // Send error status
-      res.status(400).json({ 
-        message: "Username already exists! Please choose a different username." 
-      });
+    } else {
+      res.status(400).json(
+        { 
+          "status": "error",
+          "data": {},
+          "error": {
+            "code": 400,
+            "message": "Username is already taken!" 
+          }
+        }
+      );
     }
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json(
+      { 
+        "status": "error",
+        "data": {},
+        "error": {
+          "code": 500,
+          "message": err.message
+        }
+      }
+    );
   }
 };
 
-exports.loginUser = async (req, res, user)=> {
+exports.loginUser = async (req, res)=> {
   try {
     // Get user login data
     const login = {
@@ -38,41 +53,109 @@ exports.loginUser = async (req, res, user)=> {
     const existingUser = await userDB.findOne({userName: login.userName});
     // Return error message if it does not exist
     if (!existingUser) {
-      res.status(400).json({message: 'Username does not exist'});
+      res.status(404).json(
+        {
+          "status": "error",
+          "data": {},
+          "error": {
+            "code": 404,
+            "message": 'Username does not exist.'
+          }
+        }
+      );
     } else {
       // Check if the password matches
       const isPasswordMatch  = await bcrypt.compare(
-        login.userPassword, existingUser.userPassword);
+        login.userPassword, existingUser.userPassword
+      );
+
       if (!isPasswordMatch) {
-        res.status(200).json({message: 'Incorrect password'});
+        res.status(400).json(
+          {
+            "status": "error",
+            "data": {},
+            "error": {
+              "code": 400,
+              "message": 'Incorrect password'
+            }
+          }
+        );
       } else {
         const secretKey = process.env.SECRETKEY || 'default_key';
-        const token = jwt.sign(
-          {userId: existingUser._id}, 
+
+        const token = await jwt.sign(
+          { userId: existingUser._id }, 
           secretKey, 
-          {expiresIn:'1h'});
-        // Send response
-        res.status(201).json({token});
+          { expiresIn:'1h' }
+        );
+
+        res.status(201).json(
+          {
+            "status": "sucesss",
+            "data": { 
+              "userName": existingUser.userName,
+              "userEmail": existingUser.userEmail,
+              "token": token
+            },
+          }
+        );
+
         console.log("User logged in sucessfully");
       }
     }
   } catch(err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json(
+      {
+        "status": "error",
+        "data": {},
+        "error": {
+          "code": 500,
+          "message": err.message 
+        }
+      }
+    );
   }
 };
 
 exports.deleteUserById = async (req, res) => {
   const userName = req.params.username; 
   const existingUser = await userDB.findOne({userName: userName});
+
   try {
     const deletedUser = await userDB.findByIdAndDelete(existingUser);
+
     if (!deletedUser) {
-      return res.status(404).json({message: 'Username does not exist'});
+      res.status(400).json(
+        {
+          "status": "error",
+          "data": {},
+          "error": {
+            "code": 400,
+            "message": "Username does not exist!"
+          }
+        }
+      );
+    } else {
+      res.status(204).json(
+        {
+          "status": "success",
+          "data": {},
+        }
+      );
+      console.log( { message: 'Deleted account successfully' });
     }
-    res.status(200).json({message: 'Deleted account successfully'});
-    console.log({message: 'Deleted account successfully'})
   } catch (err) {
+    res.status(500).json(
+      {
+        "status": "error",
+        "data": {},
+        "error": {
+          "code": 500,
+          "message": err.message 
+        }
+      }
+    );
+
     console.error('Error deleting user:', err.message);
-    res.status(500).json({message: 'Internal Server Error'});
   }
 };
