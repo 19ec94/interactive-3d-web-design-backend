@@ -2,17 +2,17 @@
  * Import module dependencies
  */
 
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 const userController = require('../controllers/userController');
-const userValidator = require('../middlewares/userValidator');
+const userMiddlewareIndex = require("../middlewares/user.middleware.index");
 
 /*
  * Router for user signup
  */
 
 router.post('/signup',
-  userValidator.signupDataValidator,
+  userMiddlewareIndex.isSignupDataValid,
   userController.createUser
 );
 
@@ -21,7 +21,7 @@ router.post('/signup',
  */
 
 router.post('/login', 
-  userValidator.loginDataValidator,
+  userMiddlewareIndex.isLoginDataValid,
   userController.loginUser
 );
 
