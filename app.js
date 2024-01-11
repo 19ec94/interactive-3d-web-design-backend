@@ -12,7 +12,7 @@ require('dotenv').config();
  */
 
 const indexRouter = require("./routes/indexRouter");
-const userRoutes = require('./routes/userRoutes');
+const userRouter = require('./routes/userRouter');
 
 /*
  * Import data to configure and connect to database. 
@@ -43,6 +43,6 @@ app.use(cors())
  */
 
 app.use("/", indexRouter);
-app.use('/user', userRoutes);
+app.use('/user', userRouter);
 
 module.exports = app;
