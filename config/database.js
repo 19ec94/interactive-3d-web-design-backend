@@ -1,13 +1,22 @@
+/*
+ * Import dependency
+ */
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+/*
+ * Import database configurations from environment. 
+ */
 const dbHost = process.env.DB_HOST || 'localhost';
 const dbPort = process.env.DB_PORT || 27017;
 const dbName = process.env.DB_NAME || 'interactive_3d_wed_design' ;
 const dbUser = process.env.DB_USER || '';
 const dbPassword = process.env.DB_PASSWORD || '';
 
+// Create database uri
 const DATABASE_URI=`mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`;
+
+// 
 const connectToDatabase = async () => {
   try{
     await mongoose.connect(DATABASE_URI, {authSource: 'admin'});
@@ -20,7 +29,6 @@ const connectToDatabase = async () => {
     console.error('Error connecting to database', err.message);
     process.exit(1);
   }
-  //
 };
 
 module.exports = connectToDatabase;
