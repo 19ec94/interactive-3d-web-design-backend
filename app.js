@@ -19,7 +19,7 @@ const userRouter = require('./routes/userRouter');
  */
 
 const connectToDataBase = require('./config/database.js');
-// connect to database
+// configure and connect to database
 connectToDataBase();
 
 // Start application
@@ -27,7 +27,7 @@ const app = express();
 
 // Set view engine
 app.set('view-engine', 'ejs');
-app.set('views',path.join(__dirname,'./views'));
+app.set('views', path.join(__dirname, './views'));
 
 /*
  * Setup middlewares globally.
