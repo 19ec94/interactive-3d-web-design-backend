@@ -2,9 +2,9 @@
   "name": "interactive-3d-web-design-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./bin/www",
   "scripts": {
-    "devStart": "nodemon ./index.js",
+    "devStart": "nodemon ./bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
