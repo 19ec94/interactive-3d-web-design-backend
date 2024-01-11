@@ -10,8 +10,8 @@ const cors = require("cors");
  * Import routes.
  */
 
-const indexRouter = require("./routes/indexRouter");
-const userRouter = require("./routes/userRouter");
+const rootRouter = require("./routes/root.router.index");
+const userRouter = require("./routes/user.router.index");
 
 /*
  * Import data to configure and connect to database. 
@@ -41,7 +41,7 @@ app.use(cors())
  * Setup routes.
  */
 
-app.use("/", indexRouter);
+app.use("/", rootRouter);
 app.use("/user", userRouter);
 
 module.exports = app;
