@@ -1,10 +1,17 @@
+/*
+ * Import module dependencies.
+ */
 const bcrypt = require('bcrypt'); 
 const userDB = require('../models/userModel');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-exports.createUser = async (req, res) => {
+/*
+ * Handle sign up logic.
+ * Create a new user record and append it `userdb` database.
+ */
 
+exports.createUser = async (req, res) => {
   try {
     // Create a new database entry
     const user = new userDB ({
@@ -42,6 +49,11 @@ exports.createUser = async (req, res) => {
     );
   }
 };
+
+/*
+ * Handle log in logic.
+ * Issue a session token on successful login.
+ */
 
 exports.loginUser = async (req, res)=> {
   try {
