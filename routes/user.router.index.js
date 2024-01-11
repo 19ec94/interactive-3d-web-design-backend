@@ -4,7 +4,7 @@
 
 const express = require("express");
 const router = express.Router();
-const userController = require('../controllers/user.controller.index');
+const userControllerIndex = require('../controllers/user.controller.index');
 const userMiddlewareIndex = require("../middlewares/user.middleware.index");
 
 /*
@@ -13,7 +13,7 @@ const userMiddlewareIndex = require("../middlewares/user.middleware.index");
 
 router.post('/signup',
   userMiddlewareIndex.isSignupDataValid,
-  userController.createUser
+  userControllerIndex.addUserToDatabase,
 );
 
 /*
@@ -22,7 +22,7 @@ router.post('/signup',
 
 router.post('/login', 
   userMiddlewareIndex.isLoginDataValid,
-  userController.loginUser
+  userControllerIndex.sendSessionToken,
 );
 
 /*
@@ -30,7 +30,7 @@ router.post('/login',
  */
 
 router.delete('/:username', 
-  userController.deleteUserById
+  userControllerIndex.deleteUserById
 );
 
 module.exports = router;
