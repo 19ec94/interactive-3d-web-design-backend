@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-const userValidator = require('../validators/userValidator');
+const userValidator = require('../middlewares/userValidator');
 
 router.post('/signup',
   userValidator.signupDataValidator,
