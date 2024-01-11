@@ -4,7 +4,7 @@
  * Import module dependencies.
  */
 const app = require("../app");
-const debug = require("debug")("app:server");
+//const debug = require("debug")("app:server");
 const http = require("http");
 
 /*
@@ -18,7 +18,7 @@ app.set("port", port);
  * Create HTTP Server.
  */
 
-const server = http.createServe(app);
+const server = http.createServer(app);
 
 /*
  * Listen on provided port, on all network interfaces.
