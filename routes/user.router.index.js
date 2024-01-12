@@ -8,29 +8,43 @@ const userControllerIndex = require('../controllers/user.controller.index');
 const userMiddlewareIndex = require("../middlewares/user.middleware.index");
 
 /*
- * Router for user signup
+ * Router logic for user signup
  */
 
-router.post('/signup',
+router.post("/signup",
   userMiddlewareIndex.isSignupDataValid,
-  userControllerIndex.addUserToDatabase,
-);
-
-/*
- * Router for user login
- */
-
-router.post('/login', 
-  userMiddlewareIndex.isLoginDataValid,
+  userMiddlewareIndex.isNewUser,
+  userMiddlewareIndex.addNewUserToDatabase,
+  userMiddlewareIndex.generateSessionToken,
   userControllerIndex.sendSessionToken,
 );
 
 /*
- * Router for user account deletion 
+ * Router logic for user login
  */
 
-router.delete('/:username', 
+router.post("/login", 
+  userMiddlewareIndex.isLoginDataValid,
+  userMiddlewareIndex.isExistingUser,
+  userMiddlewareIndex.verifyPassword,
+  userMiddlewareIndex.generateSessionToken,
+  userControllerIndex.sendSessionToken,
+);
+
+/*
+ * Router logic for user account deletion 
+ */
+
+router.delete("/:username", 
   userControllerIndex.deleteUserById
 );
 
+/*
+ * Router logic for protected branch
+ */
+
+router.get( "/protected",
+  userMiddlewareIndex.authenticateSessionToken,
+  (req, res)=>{ res.json({message: "Authentication succcessful"})}
+);
 module.exports = router;
