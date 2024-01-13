@@ -13,7 +13,16 @@ const isLoginDataValid = async (req, res, next) => {
 
   // Check username
   if (!validator.isLength(username, { min: 2 })) {
-    return res.status(400).json({ error: 'Username must have at least 2 characters' });
+    return res.status(400).json(
+      {
+        status: "error",
+        data: {},
+        error: {
+          code: 400,
+          message: "Username must have at least 2 characters."
+        }
+      }
+    );
   }
 
   // Check password (using a simple check, you might want to use more complex validation)
