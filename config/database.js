@@ -7,11 +7,11 @@ require('dotenv').config();
 /*
  * Import database configurations from environment. 
  */
-const dbHost = process.env.DB_HOST || 'localhost';
-const dbPort = process.env.DB_PORT || 27017;
-const dbName = process.env.DB_NAME || 'interactive_3d_wed_design' ;
-const dbUser = process.env.DB_USER || '';
-const dbPassword = process.env.DB_PASSWORD || '';
+const dbHost = process.env.DB_HOST;
+const dbPort = process.env.DB_PORT;
+const dbName = process.env.DB_NAME;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
 
 // Create database uri
 const DATABASE_URI=`mongodb://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`;
