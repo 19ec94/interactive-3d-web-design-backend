@@ -3,8 +3,11 @@ const sendSessionToken = async (req, res)=> {
   try {
     const existingUser = res.locals.existingUser; 
     const sessionToken  = res.locals.sessionToken;
-    res.cookie('sessionToken', sessionToken, { httpOnly: true });
-    res.status(201).json(
+    res.cookie('sessionToken', sessionToken, {
+      httpOnly: true,
+      sameSite: 'Lax',
+    });
+    res.status(200).json(
       {
         "status": "sucesss",
         "data": { 
@@ -14,7 +17,6 @@ const sendSessionToken = async (req, res)=> {
         },
       }
     );
-    console.log("User logged in sucessfully");
   } catch(err) {
     res.status(500).json(
       {
