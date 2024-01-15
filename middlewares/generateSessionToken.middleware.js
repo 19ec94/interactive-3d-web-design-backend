@@ -11,8 +11,6 @@ const generateSessionToken = async (req, res, next) => {
     const sessionTokenSecretKey = process.env.SESSION_TOKEN_SECRET_KEY;
     const sessionTokenDuration = process.env.SESSION_TOKEN_DURATION;
 
-    console.log(sessionTokenSecretKey);
-
     //TODO: Include necessary payload details.
     const payload = { 
       userName: existingUser.userName,
