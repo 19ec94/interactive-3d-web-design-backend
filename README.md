@@ -41,7 +41,7 @@ interact with the mongodb server.
 Assuming you have `mongosh` installed on you system, you can interact with the docker-container
 `mongodb` by executing
 ```bash
-sudo docker exec -it mongodb mongosh -u admin -p "admin()" --authenticationDatabase admin
+sudo docker exec -it mongodb mongosh -u root -p rootpassword --authenticationDatabase admin
 ```
 Now you have an interactive access to the database. 
 
@@ -61,3 +61,52 @@ http://localhost:5000/username
 ```
 to delete a user account.
 You can pass the relavant parameters in Postman API Client `body` tab. 
+
+## Expected environment variables
+This server setup expects the following environment variables for sucessful
+setup of the server and the MongoDB database. Make sure you create a `.env` file
+at the root of project directory and include the following variables in the env
+file. The following are defult values. Don't forget to set the variables to
+approprite values.
+
+ - DB_HOST=127.0.0.1
+ - DB_PORT=27017
+ - DB_NAME=i3wd
+ - DB_USER=root
+ - DB_PASSWORD=rootpassword
+ - PORT_BACKEND=5000
+ - SESSION_TOKEN_SECRET_KEY=mysecretkey
+ - SESSION_TOKEN_DURATION=1h
+ - SESSION_TOKEN_REFRESH_SECRET_KEY=refreshsecretkey
+
+## How to run this server
+Assuming you use the above default values, 
+  1. To start the database, execute the following 
+  ```bash
+  sudo docker-compose up -d
+  ```
+  at the root of the project directory.
+
+  2. To start the server, execute the following 
+  ```bash
+  npm run devStart
+  ```
+  at the root of the project directory.
+
+  3. To establish an interactive connection to the database using mongosh, execute
+  ```bash
+  sudo docker-exec -it mongodb mongosh -u root -p rootpassword --authenticationDatabase admin 
+  ```
+  at the root of the project directory.
+
+  4. To stop the docker container, run the following
+  ```bash
+  sudo docker-compose down
+  ```
+  at the root of the project directory.
+
+  5. To remove the docker volume, run the following
+  ```bash
+  sudo docker volume prune
+  ```
+  .
