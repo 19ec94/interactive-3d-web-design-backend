@@ -37,4 +37,5 @@ userDataSchema.pre('save', async function(next) {
 
 const userDB =  mongoose.model("userDB", userDataSchema);
 module.exports  = userDB;
-// NOTE: In mongodb database, you find a collection `userdbs` in admin database
+// NOTE: In mongodb database, you find a collection `userdbs` in the database
+// named $DB_NAME
