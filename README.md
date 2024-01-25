@@ -74,7 +74,7 @@ approprite values.
  - DB_NAME=i3wd
  - DB_USER=root
  - DB_PASSWORD=rootpassword
- - PORT_BACKEND=5000
+ - PORT=5000
  - SESSION_TOKEN_SECRET_KEY=mysecretkey
  - SESSION_TOKEN_DURATION=1h
  - SESSION_TOKEN_REFRESH_SECRET_KEY=refreshsecretkey
@@ -95,9 +95,11 @@ Assuming you use the above default values,
 
   3. To establish an interactive connection to the database using mongosh, execute
   ```bash
-  sudo docker exec -it mongodb mongosh -u root -p rootpassword --authenticationDatabase admin 
+  sudo docker exec -it mongodb mongosh -u <DB_USER> -p <DB_PASSWORD> --authenticationDatabase admin 
   ```
-  at the root of the project directory.
+  at the root of the project directory. Make sure to replace `<DB_USER>` and
+  `<DB_PASSWORD>` variables by actual values you set in your `.env` environment
+  file.
 
   4. To stop the docker container, run the following
   ```bash
