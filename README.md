@@ -95,7 +95,7 @@ Assuming you use the above default values,
 
   3. To establish an interactive connection to the database using mongosh, execute
   ```bash
-  sudo docker-exec -it mongodb mongosh -u root -p rootpassword --authenticationDatabase admin 
+  sudo docker exec -it mongodb mongosh -u root -p rootpassword --authenticationDatabase admin 
   ```
   at the root of the project directory.
 
