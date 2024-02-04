@@ -9,7 +9,7 @@ const sendSessionToken = async (req, res)=> {
     });
     res.status(200).json(
       {
-        "status": "sucesss",
+        "status": "success",
         "data": { 
           "userName": existingUser.userName,
           "userEmail": existingUser.userEmail,
