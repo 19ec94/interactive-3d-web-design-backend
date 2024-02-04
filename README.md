@@ -112,3 +112,9 @@ Assuming you use the above default values,
   sudo docker volume prune
   ```
   .
+
+## How to run the tests
+To run the tests execute the following command:
+```bash
+npm run test
+```

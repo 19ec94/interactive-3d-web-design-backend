@@ -17,10 +17,6 @@ const userRouter = require("./routes/user.router.index");
  * Import data to configure and connect to database. 
  */
 
-const connectToDataBase = require("./config/database.js");
-// configure and connect to database
-connectToDataBase();
-
 // Start application
 const app = express();
 
