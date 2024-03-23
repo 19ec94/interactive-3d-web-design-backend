@@ -48,3 +48,15 @@ router.get( "/protected",
   (req, res)=>{ res.json({message: "Authentication succcessful"})}
 );
 module.exports = router;
+
+router.get("/score/:username",
+  // userMiddlewareIndex.authenticateSessionToken,
+  userControllerIndex.getUserScore);
+
+router.post("/score",
+  // userMiddlewareIndex.authenticateSessionToken,
+  userControllerIndex.upsertResult);
+
+router.get("/scoreboard",
+  userControllerIndex.getAllScores
+);
